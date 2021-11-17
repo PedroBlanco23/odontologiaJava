@@ -4,39 +4,42 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Turno implements Serializable {
-    private Date fechaTurno;
+    private long dia;
+    private long mes;
+    private long hora;
     private long id;
-    private Odontologo odontologo;
-    private Paciente paciente;
+    private long idOdontologo;
+    private long idPaciente;
 
-    public Turno(Odontologo odontologo, Paciente paciente, Date fechaTurno){
-        this.odontologo = odontologo;
-        this.paciente = paciente;
-        this.fechaTurno = fechaTurno;
-    }
-    public Date getFechaTurno() {
-        return fechaTurno;
-    }
-
-    public void setFechaTurno(Date fecha) {
-        this.fechaTurno = fecha;
+    public Turno(long idOdontologo, long idPaciente, long hora,  long dia, long mes){
+        this.idOdontologo = idOdontologo;
+        this.idPaciente = idPaciente;
+        this.hora = hora;
+        this.dia = dia;
+        this.mes = mes;
     }
 
-
-    public Odontologo getOdontologo() {
-        return odontologo;
+    public void setFechaTurno(long hora, long dia, long mes) {
+        this.hora = hora;
+        this.dia = dia;
+        this.mes = mes;
     }
 
-    public void setOdontologo(Odontologo odontologo) {
-        this.odontologo = odontologo;
+
+    public long getidOdontologo() {
+        return idOdontologo;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public void setidOdontologo(long idOdontologo) {
+        this.idOdontologo = idOdontologo;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public long getidPaciente() {
+        return idPaciente;
+    }
+
+    public void setidPaciente(long idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public long getId() {
@@ -46,4 +49,17 @@ public class Turno implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+
+    public long getDia(){
+        return dia;
+    }
+
+    public long getHora(){
+        return hora;
+    }
+    public long getMes(){
+        return mes;
+    }
+
+
 }

@@ -17,39 +17,42 @@ public class PanelLogin extends JPanel {
     private JPanel botonera;
     private JButton btnIniciarSesion;
 
-
-
-
     public PanelLogin(PanelManager panelManager) {
         this.panelManager = panelManager;
     }
 
     public void armarPanelLogin() {
         setLayout(new BorderLayout());
-        setBackground(new Color(200, 221, 242));
+        setBackground(panelManager.COLOR_PRINCIPAL);
         userLbl = new JLabel("Usuario: ");
         userTxt = new JTextField();
         passwordLbl = new JLabel("Contraseña: ");
         passwordTxt = new JPasswordField();
 
         panelUsuario = new JPanel(new GridLayout());
-        panelUsuario.setBackground(new Color(200, 221, 242));
+        panelUsuario.setBackground(panelManager.COLOR_PRINCIPAL);
         panelContrasena = new JPanel(new GridLayout());
-        panelContrasena.setBackground(new Color(200, 221, 242));
+        panelContrasena.setBackground(panelManager.COLOR_PRINCIPAL);
         panelCampos = new JPanel(new BorderLayout());
-        panelCampos.setBackground(new Color(200, 221, 242));
+        panelCampos.setBackground(panelManager.COLOR_PRINCIPAL);
 
         panelUsuario.add(userLbl);
         panelUsuario.add(userTxt);
         panelContrasena.add(passwordLbl);
         panelContrasena.add(passwordTxt);
+        passwordTxt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelManager.iniciarSesion(userTxt.getText(), passwordTxt.getText());
+            }
+        });
 
         panelCampos.add(panelUsuario, BorderLayout.CENTER);
         panelCampos.add(panelContrasena, BorderLayout.AFTER_LAST_LINE);
 
 
         botonera = new JPanel();
-        botonera.setBackground(new Color(200, 221, 242));
+        botonera.setBackground(panelManager.COLOR_PRINCIPAL);
         btnIniciarSesion = new JButton("Iniciar sesión");
         botonera.add(btnIniciarSesion);
 

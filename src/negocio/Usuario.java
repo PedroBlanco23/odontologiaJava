@@ -51,7 +51,7 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public void agregarRol(String rol){
+    public void setRol(String rol){
         roles.add(rol);
     }
 
