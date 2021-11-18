@@ -4,6 +4,8 @@ import negocio.Odontologo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.Array;
@@ -27,7 +29,7 @@ public class PanelPacienteAgregarTurno extends JPanel {
     private JLabel dialbl;
     private JLabel meslbl;
     private JLabel horalbl;
-
+    public boolean cargando = false;
     public PanelPacienteAgregarTurno(PanelManager panelManager) {
         super(new GridLayout(2, 4));
         this.panelManager = panelManager;
@@ -64,12 +66,13 @@ public class PanelPacienteAgregarTurno extends JPanel {
         mesCombo.setSelectedItem(null);
         horaCombo.setSelectedItem(null);
 
+
         ArrayList<String> meses = new ArrayList<String>(Arrays.asList("Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
                 ,"Septiembre",  "Octubre","Noviembre","Diciembre"));
 
-        odontologoCombo.addItemListener(new ItemListener() {
+        odontologoCombo.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 diaCombo.removeAllItems();
                 mesCombo.removeAllItems();
                 horaCombo.removeAllItems();
@@ -84,13 +87,14 @@ public class PanelPacienteAgregarTurno extends JPanel {
                 horaCombo.setSelectedItem(null);
             }
         });
-        mesCombo.addItemListener(new ItemListener() {
+        mesCombo.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 diaCombo.removeAllItems();
                 horaCombo.removeAllItems();
 
-                if(mesCombo.getSelectedItem() != null) {
+                if(mesCombo.getSelectedItem() != null && !cargando) {
+                    cargando = true;
 
                     int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
                     for (int i = 1; i <= diasMes[meses.indexOf(mesCombo.getSelectedItem())]; i++) {
@@ -101,34 +105,39 @@ public class PanelPacienteAgregarTurno extends JPanel {
                 horaCombo.removeAllItems();
                 diaCombo.setSelectedItem(null);
                 horaCombo.setSelectedItem(null);
+                cargando = false;
             }
             }
         });
 
-        diaCombo.addItemListener(new ItemListener() {
+        diaCombo.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 horaCombo.removeAllItems();
-                if (diaCombo.getSelectedItem() != null) {
+                if (diaCombo.getSelectedItem() != null && !cargando) {
 
                     TurnoService turnoService = new TurnoService();
                     ArrayList<Turno> turnos = turnoService.listarTurno();
 
 
                     Odontologo odontoActual = (Odontologo) odontologoCombo.getSelectedItem();
-                    ArrayList<Integer> horarios = new ArrayList<Integer>();
-                    for (int i = 8; i <= 18; i++) {
+                    ArrayList<Long> horarios = new ArrayList<Long>();
+                    for (long i = 8; i <= 18; i++) {
                         horarios.add(i);
                     }
                     for (Turno turno : turnos) {
                         if (turno.getMes() == meses.indexOf((String) mesCombo.getSelectedItem())+1) {
                             if (turno.getDia() == Integer.parseInt((String) diaCombo.getSelectedItem())) {
-                                horarios.remove(horarios.indexOf(turno.getHora()));
+                                System.out.println(turno.getHora());
+
+                                horarios.remove(turno.getHora());
+
+                                System.out.println(Arrays.toString(horarios.toArray()));
                             }
                         }
                     }
 
-                    for (Integer hora : horarios) {
+                    for (Long hora : horarios) {
                         horaCombo.addItem(hora.toString());
                     }
 

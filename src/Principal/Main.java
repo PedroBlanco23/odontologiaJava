@@ -46,6 +46,13 @@ public class Main {
       for (Paciente p: pacientes){
           System.out.println(p.getId()+ p.getNombre());
       }
+
+      UsuarioService usuarioService = new UsuarioService();
+      ArrayList<Usuario> usuarios = usuarioService.listarUsuario();
+      for(Usuario u : usuarios) {
+          System.out.println(u.getIdPaciente() + u.getUsuario() + u.getContraseña());
+      }
+
 //
 //        System.out.println(pacienteService.recuperarPaciente(1));
 

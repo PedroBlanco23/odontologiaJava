@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PanelPacienteVerTurnos extends JPanel {
     private PanelManager panelManager;
@@ -37,7 +38,8 @@ public class PanelPacienteVerTurnos extends JPanel {
         setLayout(new BorderLayout(0, 5));
         setBackground(panelManager.COLOR_PRINCIPAL);
 
-
+        ArrayList<String> meses = new ArrayList<String>(Arrays.asList("Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
+                ,"Septiembre",  "Octubre","Noviembre","Diciembre"));
         botoneraPrincipal = new JPanel();
         botoneraPrincipal.setLayout(new FlowLayout());
         botoneraPrincipal.setBackground(panelManager.COLOR_SECUNDARIO);
@@ -73,7 +75,7 @@ public class PanelPacienteVerTurnos extends JPanel {
 
                 row[0] = odontologo.getNombre() + " " + odontologo.getApellido();
                 row[1] = paciente.getNombre() + " " + paciente.getApellido();
-                row[2] = turno.getHora() + "hs " + turno.getDia()+"/" + turno.getMes();
+                row[2] = turno.getHora() + "hs el " + turno.getDia()+" de " + meses.get((int) turno.getMes()-1)  ;
                 contenidoTable.addRow(row);
             }
         }
