@@ -12,6 +12,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import negocio.Paciente;
 import negocio.Turno;
 import negocio.Usuario;
 import service.OdontologoService;
@@ -33,9 +34,10 @@ public class PanelPacienteAgregarTurno extends JPanel {
     public PanelPacienteAgregarTurno(PanelManager panelManager) {
         super(new GridLayout(2, 4));
         this.panelManager = panelManager;
+        this.setBackground(panelManager.COLOR_SECUNDARIO);
     }
 
-    public void armarPanelPacienteAgregarTurno (Usuario user) {
+    public void armarPanelPacienteAgregarTurno (Paciente paciente) {
         odontologolbl = new JLabel("ODONTOLOGO", SwingConstants.CENTER);
         dialbl = new JLabel("DIA", SwingConstants.CENTER);
         meslbl = new JLabel("MES", SwingConstants.CENTER);
@@ -129,7 +131,7 @@ public class PanelPacienteAgregarTurno extends JPanel {
                         if (turno.getMes() == meses.indexOf((String) mesCombo.getSelectedItem())+1) {
                             if (turno.getDia() == Integer.parseInt((String) diaCombo.getSelectedItem())) {
                                 System.out.println(turno.getHora());
-
+                                System.out.println(turno.getidPaciente());
                                 horarios.remove(turno.getHora());
 
                                 System.out.println(Arrays.toString(horarios.toArray()));
@@ -160,11 +162,13 @@ public class PanelPacienteAgregarTurno extends JPanel {
 
 
 
+        UIManager UI=new UIManager();
+        UI.put("OptionPane.background", panelManager.COLOR_TERCIARIO);
+        UI.put("Panel.background", panelManager.COLOR_SECUNDARIO);
 
-
-
-        int result = JOptionPane.showConfirmDialog(null, this, "Agregar",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showOptionDialog(null, this, "Agregar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,  new String[]{"Añadir turno", "Cancelar"}, // this is the array
+                "default");
 
 
 
@@ -172,7 +176,7 @@ public class PanelPacienteAgregarTurno extends JPanel {
             if (horaCombo.getSelectedItem() != null) {
                 TurnoService turnoService = new TurnoService();
                 Turno turno = new Turno(((Odontologo) odontologoCombo.getSelectedItem()).getId(),
-                        user.getIdPaciente(), Long.parseLong((String) horaCombo.getSelectedItem()), Long.parseLong(( String) diaCombo.getSelectedItem()),
+                        paciente.getId(), Long.parseLong((String) horaCombo.getSelectedItem()), Long.parseLong(( String) diaCombo.getSelectedItem()),
                         (long) meses.indexOf((String) mesCombo.getSelectedItem()) +1);
                 turnoService.guardar(turno);
             }

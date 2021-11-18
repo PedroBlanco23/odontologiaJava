@@ -1,6 +1,8 @@
 package mvc;
 
+import negocio.Paciente;
 import negocio.Usuario;
+import service.PacienteService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,12 +17,13 @@ public class PanelPaciente extends JPanel {
     private JButton btnRegistrarTurnos;
     private JButton btnVolver;
     private JPanel botoneraVolver;
+    private PacienteService pacienteService;
 
 
     public PanelPaciente(PanelManager panelManager) {
         this.panelManager = panelManager;
     }
-    public void armarPanelPaciente(Usuario user){
+    public void armarPanelPaciente(Paciente paciente){
         setLayout(new BorderLayout(0, 5));
         setBackground(panelManager.COLOR_PRINCIPAL);
 
@@ -46,6 +49,8 @@ public class PanelPaciente extends JPanel {
         botoneraVolver.add(btnVolver);
         add(botoneraVolver, BorderLayout.SOUTH);
 
+        pacienteService = new PacienteService();
+
         btnVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,14 +61,14 @@ public class PanelPaciente extends JPanel {
         btnVerTurnos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.mostrarPacienteVerTurnos(user);
+                panelManager.mostrarPacienteVerTurnos(paciente);
             }
         });
 
         btnRegistrarTurnos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.mostrarPacienteAgregarTurno(user);
+                panelManager.mostrarPacienteAgregarTurno(paciente);
             }
         });
 

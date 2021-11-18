@@ -34,7 +34,7 @@ public class PanelPacienteVerTurnos extends JPanel {
         this.panelManager = panelManager;
     }
 
-    public void armarPanelPacienteVerTurnos (Usuario user) {
+    public void armarPanelPacienteVerTurnos (Paciente paciente) {
         setLayout(new BorderLayout(0, 5));
         setBackground(panelManager.COLOR_PRINCIPAL);
 
@@ -64,14 +64,11 @@ public class PanelPacienteVerTurnos extends JPanel {
         ArrayList<Turno> lista = turnoService.listarTurno();
 
         OdontologoService odontologoService = new OdontologoService();
-        PacienteService pacienteService = new PacienteService();
 
         for (Turno turno: lista) {
-            if(turno.getidPaciente() == user.getIdPaciente()) {
+            if(turno.getidPaciente() == paciente.getId()) {
                 Object[] row = new Object[3];
                 Odontologo odontologo = odontologoService.recuperarOdontologo(turno.getidOdontologo());
-                Paciente paciente = pacienteService.recuperarPaciente(turno.getidPaciente());
-
 
                 row[0] = odontologo.getNombre() + " " + odontologo.getApellido();
                 row[1] = paciente.getNombre() + " " + paciente.getApellido();
@@ -93,7 +90,7 @@ public class PanelPacienteVerTurnos extends JPanel {
         btnVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.mostrarPaciente(user);
+                panelManager.mostrarPaciente(paciente);
             }
         });
 

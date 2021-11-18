@@ -14,6 +14,7 @@ public class PanelAdministradorPacienteAgregar extends JPanel {
     public PanelAdministradorPacienteAgregar (PanelManager panelManager) {
         super(new GridLayout(2, 7));
         this.panelManager = panelManager;
+        this.setBackground(PanelManager.COLOR_SECUNDARIO);
     }
 
     public void armarPanelAdministradorPacienteAgregar() {
@@ -43,8 +44,15 @@ public class PanelAdministradorPacienteAgregar extends JPanel {
         JTextField contrasenaField = new JTextField();
         add(contrasenaField);
 
-        int result = JOptionPane.showConfirmDialog(null, this, "Agregar",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        UIManager UI=new UIManager();
+        UI.put("OptionPane.background", panelManager.COLOR_TERCIARIO);
+        UI.put("Panel.background", panelManager.COLOR_SECUNDARIO);
+
+
+        int result = JOptionPane.showOptionDialog(null, this, "Agregar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,  new String[]{"Añadir paciente", "Cancelar"},
+                "default");
         if (result == JOptionPane.OK_OPTION){
             //creacion de paciente a raiz de datos proporcionados *falta fecha*
             Paciente nuevoPaciente = new Paciente(nombreField.getText(),apellidoField.getText(),domicilioField.getText(),Integer.parseInt(dniField.getText()));
