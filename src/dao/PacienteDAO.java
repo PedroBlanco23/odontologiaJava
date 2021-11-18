@@ -25,8 +25,8 @@ public class PacienteDAO implements IPacienteDAO {
                 int index = 0;
                 int i = 0;
                 for (Object obj : pacientes) {
-                    Paciente paci = (Paciente) obj;
-                    if (paci.getId() == paciente.getId()) {
+
+                    if (((Paciente)obj).getId() == paciente.getId()) {
                         index = i;
                     }
                     i++;

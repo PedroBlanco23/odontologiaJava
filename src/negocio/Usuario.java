@@ -64,4 +64,15 @@ public class Usuario implements Serializable {
         }
         return pertenece;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", usuario='" + usuario + '\'' +
+                ", contraseña='" + contraseña + '\'' +
+                ", idPaciente=" + idPaciente +
+                ", roles=" + roles +
+                '}';
+    }
 }

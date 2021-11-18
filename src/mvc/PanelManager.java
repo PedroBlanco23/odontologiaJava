@@ -20,6 +20,7 @@ public class PanelManager {
     private PanelPaciente panelPaciente;
     private PanelLogin panelLogin;
     private PanelPacienteVerTurnos panelPacienteVerTurnos;
+    private PanelPacienteAgregarTurno panelPacienteAgregarTurno;
 
 
     public void armarManager(){
@@ -50,7 +51,7 @@ public class PanelManager {
 
     public void mostrarAdministradorPacientes(){
         PanelAdministradorPaciente panelAdministradorPaciente = new PanelAdministradorPaciente(this);
-        panelAdministradorPaciente.armarPanelAdminPac();
+        panelAdministradorPaciente.armarPanelAdminPaciente();
         jframe.setBounds(250,250,700,500);
         mostrarEnPantalla(panelAdministradorPaciente);
     }
@@ -58,6 +59,16 @@ public class PanelManager {
     public void mostrarAgregar(){
         PanelAdministradorPacienteAgregar panelAdministradorPacienteAgregar = new PanelAdministradorPacienteAgregar(this);
         panelAdministradorPacienteAgregar.armarPanelAdministradorPacienteAgregar();
+    }
+
+    public void mostrarEditar(JTable tabla){
+        PanelAdministradorPacienteEditar panelAdministradorPacienteEditar = new PanelAdministradorPacienteEditar(this);
+        panelAdministradorPacienteEditar.armarPanelAdministradorPacienteEditar(tabla);
+    }
+
+    public void mostrarBorrar(JTable tabla){
+         PanelAdministradorPacienteBorrar panelAdministradorPacienteBorrar = new PanelAdministradorPacienteBorrar(this);
+         panelAdministradorPacienteBorrar.armarPanelAdministracionPacienteBorrar(tabla);
     }
 
     public void mostrarPaciente(Usuario user){
@@ -72,6 +83,12 @@ public class PanelManager {
         panelPacienteVerTurnos.armarPanelPacienteVerTurnos(user);
         jframe.setBounds(250,250,700,500);
         mostrarEnPantalla(panelPacienteVerTurnos);
+    }
+
+    public void mostrarPacienteAgregarTurno(Usuario user) {
+        panelPacienteAgregarTurno = new PanelPacienteAgregarTurno(this);
+        panelPacienteAgregarTurno.armarPanelPacienteAgregarTurno(user);
+
     }
 
 

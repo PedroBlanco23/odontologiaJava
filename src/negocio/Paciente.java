@@ -8,6 +8,13 @@ public class Paciente extends Persona implements Serializable {
     private int dni;
     private Date fechaAlta;
 
+    public Paciente(long id, String nombre, String apellido, String domicilio, int dni) {
+        super(nombre, apellido);
+        this.id = id;
+        this.domicilio = domicilio;
+        this.dni = dni;
+    }
+
     public Paciente(String nombre, String apellido, String domicilio, int dni){
         super(nombre,apellido);
         this.domicilio = domicilio;
@@ -43,7 +50,7 @@ public class Paciente extends Persona implements Serializable {
 
     @Override
     public String toString() {
-        return "Paciente{" + "nombre='" + super.getNombre() + '\'' + ", apellido='" + super.getApellido() + '\'' + ", domicilio='" + domicilio + '\'' + ", dni=" + dni + ", fechaAlta=" + fechaAlta + '}';
+        return "Paciente{ id:"+ id + "nombre='" + super.getNombre() + '\'' + ", apellido='" + super.getApellido() + '\'' + ", domicilio='" + domicilio + '\'' + ", dni=" + dni + ", fechaAlta=" + fechaAlta + '}';
     }
 
     public long getId() {

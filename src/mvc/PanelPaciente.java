@@ -60,6 +60,13 @@ public class PanelPaciente extends JPanel {
             }
         });
 
+        btnRegistrarTurnos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelManager.mostrarPacienteAgregarTurno(user);
+            }
+        });
+
 
     }
 

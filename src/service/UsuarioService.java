@@ -22,8 +22,10 @@ public class UsuarioService {
         return usuarioDAO.buscarPorId(id);
     }
 
-    public void eliminarUsuario(long id){
-        usuarioDAO.borrar(id);
+    public Usuario recuperarUsuarioPorPaciente(long id){return usuarioDAO.buscarPorPaciente(id);}
+
+    public Usuario eliminarUsuario(long id){
+        return usuarioDAO.borrar(id);
     }
 
     public ArrayList<Usuario> listarUsuario() {

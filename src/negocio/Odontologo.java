@@ -28,4 +28,8 @@ public class Odontologo extends Persona implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+
+    public String toString() {
+        return this.getNombre()+ " " + this.getApellido();
+    }
 }

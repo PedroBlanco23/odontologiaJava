@@ -52,6 +52,19 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
+    public Usuario buscarPorPaciente(long id) {
+        ArrayList<Usuario> usuarios = this.listar();
+        Usuario resultado = null;
+
+        for(Usuario user : usuarios) {
+            if (user.getIdPaciente() == id)
+                resultado = user;
+        }
+
+        return resultado;
+    }
+
+    @Override
     public ArrayList<Usuario> listar() {
         Archivo archivo = new Archivo(PATH);
         ArrayList lista = archivo.listar();
@@ -69,16 +82,20 @@ public class UsuarioDAO implements IUsuarioDAO {
         Archivo archivo = new Archivo(PATH);
         ArrayList<Usuario> usuarios = this.listar();
 
-        int index = 0;
+        int index = -1;
         int i = 0;
         for (Usuario user : usuarios) {
             if (user.getId() == id)
                 index = i;
             i++;
+
         }
-        borrado = usuarios.get(index);
-        usuarios.remove(index);
-        archivo.guardar(usuarios);
-        return borrado;
+        if(index!=-1) {
+            borrado = usuarios.get(index);
+            usuarios.remove(index);
+            archivo.guardar(usuarios);
+            return borrado;
+        }else return null;
+
     }
 }

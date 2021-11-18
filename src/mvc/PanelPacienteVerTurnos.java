@@ -51,6 +51,7 @@ public class PanelPacienteVerTurnos extends JPanel {
         jtable = new JTable(contenidoTable);
         scrollPane = new JScrollPane();
         scrollPane.setViewportView(jtable);
+        jtable.getTableHeader().setReorderingAllowed(false) ;
         jtable.setDefaultEditor(Object.class, null);
 
         contenidoTable.addColumn("ODONTOLOGO");
@@ -93,6 +94,7 @@ public class PanelPacienteVerTurnos extends JPanel {
                 panelManager.mostrarPaciente(user);
             }
         });
+
 
 
 

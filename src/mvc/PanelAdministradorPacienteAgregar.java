@@ -6,6 +6,7 @@ import service.PacienteService;
 import service.UsuarioService;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class PanelAdministradorPacienteAgregar extends JPanel {
@@ -46,13 +47,13 @@ public class PanelAdministradorPacienteAgregar extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION){
             //creacion de paciente a raiz de datos proporcionados *falta fecha*
-            System.out.println(nombreField.getText()+apellidoField.getText()+domicilioField.getText()+Integer.parseInt(dniField.getText()));
             Paciente nuevoPaciente = new Paciente(nombreField.getText(),apellidoField.getText(),domicilioField.getText(),Integer.parseInt(dniField.getText()));
             //creacion de usuario a raiz de datos y del nuevo paciente
-            Usuario nuevoUsuario = new Usuario(usuarioField.getText(),contrasenaField.getText(),nuevoPaciente.getId());
             PacienteService pacienteService = new PacienteService();//nuevo service paciente
             pacienteService.guardarPaciente(nuevoPaciente);
+
             UsuarioService usuarioService = new UsuarioService(); //nuevo service usuario
+            Usuario nuevoUsuario = new Usuario(usuarioField.getText(),contrasenaField.getText(),nuevoPaciente.getId());
             usuarioService.guardarUsuario(nuevoUsuario);
             //actualizo tabla
             panelManager.mostrarAdministradorPacientes();

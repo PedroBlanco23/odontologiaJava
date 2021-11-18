@@ -9,6 +9,8 @@ public interface IUsuarioDAO {
 
     public Usuario buscarPorId(long id);
 
+    public Usuario buscarPorPaciente(long id);
+
     public ArrayList<Usuario>listar();
 
     public Usuario borrar (long id);

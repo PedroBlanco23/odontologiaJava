@@ -4,9 +4,11 @@ import service.PacienteService;
 import service.UsuarioService;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import negocio.*;
@@ -23,7 +25,7 @@ public class PanelAdministradorPaciente extends JPanel {
         this.panelManager = panel;
     }
 
-    public void armarPanelAdminPac(){
+    public void armarPanelAdminPaciente(){
         setLayout(new BorderLayout(0, 5));
         setBackground(panelManager.COLOR_PRINCIPAL);
 
@@ -36,7 +38,6 @@ public class PanelAdministradorPaciente extends JPanel {
         add(panelTitulo, BorderLayout.NORTH);
 
         JTable tabla = armarTabla();
-        tabla.setDefaultEditor(Object.class, null);
 
         JScrollPane pane = new JScrollPane();
         pane.setViewportView(tabla);
@@ -75,15 +76,28 @@ public class PanelAdministradorPaciente extends JPanel {
             }
         });
 
+        btnEditar.addActionListener(new ActionListener() {
+            @Override
+           public void actionPerformed(ActionEvent e) {
+                panelManager.mostrarEditar(tabla);
+           }
+        });
+
+        btnBorrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelManager.mostrarBorrar(tabla);
+            }
+        });
     }
 
-    public JTable armarTabla (){
+    public JTable armarTabla(){
 
         UsuarioService usuarioService = new UsuarioService();
         List<Usuario> usuarios = usuarioService.listarUsuario();
 
         PacienteService pacienteService = new PacienteService();
-        int size  = pacienteService.listarPaciente().size();
+
 
         String[] nombresColumnas =
                 {"ID",
@@ -95,28 +109,34 @@ public class PanelAdministradorPaciente extends JPanel {
                         "Usuario",
                         "Contraseña"};
 
-        Object[][] data = new Object[size][8];
-
-        int index = 0;
-
-        while (index < usuarios.size()){
-            long idPaciente = usuarios.get(index).getIdPaciente();
-            int cont= 0;
-            if (idPaciente != 0){
-                Paciente paciente = pacienteService.recuperarPaciente(idPaciente);
-                data[cont][0]= idPaciente;
-                data[cont][1]= paciente.getNombre();
-                data[cont][2]= paciente.getApellido();
-                data[cont][3]= paciente.getDomicilio();
-                data[cont][4]= paciente.getDni();
-                data[cont][5]= paciente.getFechaAlta();
-                data[cont][6]= usuarios.get(index).getUsuario();
-                data[cont][7]= usuarios.get(index).getContraseña();
-                cont++;
-            }index++;
+        DefaultTableModel contenidoTabla = new DefaultTableModel();
+        for (String columna: nombresColumnas) {
+            contenidoTabla.addColumn(columna);
         }
 
-        JTable tabla = new JTable(data, nombresColumnas);
+
+        for (Usuario user: usuarios) {
+            long idPaciente = user.getIdPaciente();
+            Object[] data = new Object[8];
+            if (idPaciente != 0) {
+                Paciente paciente = pacienteService.recuperarPaciente(idPaciente);
+                if(paciente != null) {
+                    data[0] = idPaciente;
+                    data[1] = paciente.getNombre();
+                    data[2] = paciente.getApellido();
+                    data[3] = paciente.getDomicilio();
+                    data[4] = paciente.getDni();
+                    data[5] = paciente.getFechaAlta();
+                    data[6] = user.getUsuario();
+                    data[7] = user.getContraseña();
+                    contenidoTabla.addRow(data);
+                }
+            }
+        }
+
+        JTable tabla = new JTable(contenidoTabla);
+        tabla.setDefaultEditor(Object.class, null);
+        tabla.getTableHeader().setReorderingAllowed(false);
         return tabla;
     }
 
