@@ -162,10 +162,6 @@ public class PanelPacienteAgregarTurno extends JPanel {
 
 
 
-        UIManager UI=new UIManager();
-        UI.put("OptionPane.background", panelManager.COLOR_TERCIARIO);
-        UI.put("Panel.background", panelManager.COLOR_SECUNDARIO);
-
         int result = JOptionPane.showOptionDialog(null, this, "Agregar",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,  new String[]{"Añadir turno", "Cancelar"}, // this is the array
                 "default");

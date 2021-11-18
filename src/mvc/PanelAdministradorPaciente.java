@@ -86,7 +86,9 @@ public class PanelAdministradorPaciente extends JPanel {
         btnBorrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.mostrarBorrar(tabla);
+                if (tabla.getSelectedRow() != -1) {
+                    panelManager.mostrarBorrar(tabla);
+                }
             }
         });
     }

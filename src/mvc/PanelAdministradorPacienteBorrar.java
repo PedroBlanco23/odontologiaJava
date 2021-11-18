@@ -16,8 +16,12 @@ public class PanelAdministradorPacienteBorrar extends JPanel {
 
         long id = (long) tabla.getValueAt(seleccion, 0);
 
-        int resultado = JOptionPane.showConfirmDialog(this,
-                "Esta seguro de eliminar este paciente", "Confirmacion", JOptionPane.YES_NO_OPTION);
+
+        int resultado = JOptionPane.showOptionDialog(null, "¿Está seguro de eliminar este paciente?" , "Confirmación",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,  new String[]{"Eliminar", "Cancelar"},
+                "default");
+        //int resultado = JOptionPane.showConfirmDialog(this,
+           //     "Esta seguro de eliminar este paciente", "Confirmacion", JOptionPane.YES_NO_OPTION);
         if(resultado == JOptionPane.YES_OPTION) {
             PacienteService pacienteService = new PacienteService();
             pacienteService.eliminarPaciente(id);

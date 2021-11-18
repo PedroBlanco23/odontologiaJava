@@ -25,6 +25,9 @@ public class PanelManager {
 
     public void armarManager() {
         jframe = new JFrame();
+        UIManager UI=new UIManager();
+        UI.put("OptionPane.background", this.COLOR_TERCIARIO);
+        UI.put("Panel.background", this.COLOR_SECUNDARIO);
 
 
         panelPaciente = new PanelPaciente(this);
