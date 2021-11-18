@@ -71,11 +71,7 @@ public class PanelAdministradorPaciente extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 panelManager.mostrarAgregar();
-                //actualizo tabla
-                remove(pane);
-                JScrollPane nuevo = new JScrollPane();
-                nuevo.add(armarTabla());
-                add(nuevo);
+
             }
         });
 
@@ -102,9 +98,10 @@ public class PanelAdministradorPaciente extends JPanel {
         Object[][] data = new Object[size][8];
 
         int index = 0;
-        int cont = 0;
+
         while (index < usuarios.size()){
             long idPaciente = usuarios.get(index).getIdPaciente();
+            int cont= 0;
             if (idPaciente != 0){
                 Paciente paciente = pacienteService.recuperarPaciente(idPaciente);
                 data[cont][0]= idPaciente;

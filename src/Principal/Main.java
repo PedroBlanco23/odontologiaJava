@@ -12,6 +12,7 @@ import service.PacienteService;
 import service.TurnoService;
 import service.UsuarioService;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Main {
@@ -19,11 +20,10 @@ public class Main {
     public static void main(String[] args) {
         PanelManager panelManager= new PanelManager();
         panelManager.armarManager();
-/*
-        UsuarioService usuarioService = new UsuarioService();
-        Usuario usuario = new Usuario("Pedro", "123");
-        usuarioService.guardarUsuario(usuario);
 
+/*
+    Usuario usuario = new Usuario("Pedro", "123");
+        usuarioService.guardarUsuario(usuario);
         Paciente paciente = new Paciente("Pedro", "Blanco", "Mi casa", 44092382);
         PacienteService pacienteService = new PacienteService();
         pacienteService.guardarPaciente(paciente);

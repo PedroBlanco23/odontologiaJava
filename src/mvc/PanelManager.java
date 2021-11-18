@@ -56,46 +56,8 @@ public class PanelManager {
     }
 
     public void mostrarAgregar(){
-        JPanel panelAgregar = new JPanel(new GridLayout(2,7));
-        String[] labels = {"ID",
-                "Nombre",
-                "Apellido",
-                "Domicilio",
-                "DNI",
-                "Fecha de alta",
-                "Usuario",
-                "Contraseña"};
-        for(String f : labels) panelAgregar.add(new JLabel(f));
-
-
-        JTextField nombreField = new JTextField();
-        panelAgregar.add(nombreField);
-        JTextField apellidoField = new JTextField();
-        panelAgregar.add(apellidoField);
-        JTextField domicilioField = new JTextField();
-        panelAgregar.add(domicilioField);
-        JTextField dniField = new JTextField();
-        panelAgregar.add(dniField);
-        JTextField fechaDeAltaField = new JTextField();
-        panelAgregar.add(fechaDeAltaField);
-        JTextField usuarioField = new JTextField();
-        panelAgregar.add(usuarioField);
-        JTextField contrasenaField = new JTextField();
-        panelAgregar.add(contrasenaField);
-
-
-        int result = JOptionPane.showConfirmDialog(null, panelAgregar, "Agregar",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (result == JOptionPane.OK_OPTION){
-            //creacion de paciente a raiz de datos proporcionados *falta fecha*
-            Paciente nuevoPaciente = new Paciente(nombreField.getText(),apellidoField.getText(),domicilioField.getText(),Integer.parseInt(dniField.getText()));
-            //creacion de usuario a raiz de datos y del nuevo paciente
-            Usuario nuevoUsuario = new Usuario(usuarioField.getText(),contrasenaField.getText(),nuevoPaciente.getId());
-            PacienteService pacienteService = new PacienteService();//nuevo service paciente
-            pacienteService.guardarPaciente(nuevoPaciente);
-            UsuarioService usuarioService = new UsuarioService(); //nuevo service usuario
-            usuarioService.guardarUsuario(nuevoUsuario);
-        }
+        PanelAdministradorPacienteAgregar panelAdministradorPacienteAgregar = new PanelAdministradorPacienteAgregar(this);
+        panelAdministradorPacienteAgregar.armarPanelAdministradorPacienteAgregar();
     }
 
     public void mostrarPaciente(Usuario user){

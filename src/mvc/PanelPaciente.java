@@ -61,9 +61,6 @@ public class PanelPaciente extends JPanel {
         });
 
 
-
-
-
     }
 
 }
