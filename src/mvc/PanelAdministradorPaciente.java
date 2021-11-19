@@ -4,6 +4,7 @@ import service.PacienteService;
 import service.UsuarioService;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ public class PanelAdministradorPaciente extends JPanel {
     private JPanel panelTitulo;
     private JPanel panelBotonera;
     private JScrollPane pane;
+    private static final int X = 1; // para indicar de donde son los botones
 
 
 
@@ -27,12 +29,12 @@ public class PanelAdministradorPaciente extends JPanel {
 
     public void armarPanelAdminPaciente(){
         setLayout(new BorderLayout(0, 5));
-        setBackground(panelManager.COLOR_PRINCIPAL);
+        setBackground(Colores.COLOR_CINCO);
 
         panelTitulo= new JPanel();
-        panelTitulo.setBackground(panelManager.COLOR_SECUNDARIO);
+        panelTitulo.setBackground(Colores.COLOR_TRES);
         JLabel titulo = new JLabel("Pacientes", SwingConstants.CENTER);
-        titulo.setFont(new Font(null, 0, 30));
+        titulo.setFont(Fuentes.FUENTE_DOS);
 
         panelTitulo.add(titulo);
         add(panelTitulo, BorderLayout.NORTH);
@@ -41,6 +43,8 @@ public class PanelAdministradorPaciente extends JPanel {
 
         JScrollPane pane = new JScrollPane();
         pane.setViewportView(tabla);
+        pane.getViewport().setBackground(Colores.COLOR_CUATRO);
+        pane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         add(pane, BorderLayout.CENTER);
 
@@ -71,7 +75,7 @@ public class PanelAdministradorPaciente extends JPanel {
         btnAgregar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.mostrarAgregar();
+                panelManager.mostrarAgregar(X);
 
             }
         });
@@ -79,7 +83,9 @@ public class PanelAdministradorPaciente extends JPanel {
         btnEditar.addActionListener(new ActionListener() {
             @Override
            public void actionPerformed(ActionEvent e) {
-                panelManager.mostrarEditar(tabla);
+                    if (tabla.getSelectedRow() != -1) {
+                        panelManager.mostrarEditar(X, tabla);
+                }
            }
         });
 
@@ -87,7 +93,7 @@ public class PanelAdministradorPaciente extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (tabla.getSelectedRow() != -1) {
-                    panelManager.mostrarBorrar(tabla);
+                    panelManager.mostrarBorrar(X, tabla);
                 }
             }
         });
@@ -102,12 +108,13 @@ public class PanelAdministradorPaciente extends JPanel {
 
 
         String[] nombresColumnas =
-                {"ID",
+                {       "ID",
                         "Nombre",
                         "Apellido",
                         "Domicilio",
                         "DNI",
-                        "Fecha de alta",
+                        "Mes de Alta",
+                        "Dia de Alta",
                         "Usuario",
                         "Contraseña"};
 
@@ -119,7 +126,7 @@ public class PanelAdministradorPaciente extends JPanel {
 
         for (Usuario user: usuarios) {
             long idPaciente = user.getIdPaciente();
-            Object[] data = new Object[8];
+            Object[] data = new Object[9];
             if (idPaciente != 0) {
                 Paciente paciente = pacienteService.recuperarPaciente(idPaciente);
                 if(paciente != null) {
@@ -128,9 +135,10 @@ public class PanelAdministradorPaciente extends JPanel {
                     data[2] = paciente.getApellido();
                     data[3] = paciente.getDomicilio();
                     data[4] = paciente.getDni();
-                    data[5] = paciente.getFechaAlta();
-                    data[6] = user.getUsuario();
-                    data[7] = user.getContraseña();
+                    data[5] = panelManager.meses.get(paciente.getMesAlta()-1);
+                    data[6] = paciente.getDiaAlta();
+                    data[7] = user.getUsuario();
+                    data[8] = user.getContraseña();
                     contenidoTabla.addRow(data);
                 }
             }
@@ -139,6 +147,14 @@ public class PanelAdministradorPaciente extends JPanel {
         JTable tabla = new JTable(contenidoTabla);
         tabla.setDefaultEditor(Object.class, null);
         tabla.getTableHeader().setReorderingAllowed(false);
+        tabla.setFont(Fuentes.FUENTE_CUATRO);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( SwingConstants.CENTER);
+        tabla.setDefaultRenderer(Object.class, centerRenderer);
+        tabla.getTableHeader().setFont(Fuentes.FUENTE_CINCO);
+        tabla.setRowHeight(25);
+
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(3);
         return tabla;
     }
 

@@ -11,7 +11,16 @@ public class Turno implements Serializable {
     private long idOdontologo;
     private long idPaciente;
 
-    public Turno(long idOdontologo, long idPaciente, long hora,  long dia, long mes){
+    public Turno(long id, long idOdontologo, long idPaciente, long hora, long dia, long mes) {
+        this.dia = dia;
+        this.mes = mes;
+        this.hora = hora;
+        this.id = id;
+        this.idOdontologo = idOdontologo;
+        this.idPaciente = idPaciente;
+    }
+
+    public Turno(long idOdontologo, long idPaciente, long hora, long dia, long mes){
         this.idOdontologo = idOdontologo;
         this.idPaciente = idPaciente;
         this.hora = hora;
@@ -61,5 +70,15 @@ public class Turno implements Serializable {
         return mes;
     }
 
-
+    @Override
+    public String toString() {
+        return "Turno{" +
+                "dia=" + dia +
+                ", mes=" + mes +
+                ", hora=" + hora +
+                ", id=" + id +
+                ", idOdontologo=" + idOdontologo +
+                ", idPaciente=" + idPaciente +
+                '}';
+    }
 }

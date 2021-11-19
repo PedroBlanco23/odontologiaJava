@@ -31,17 +31,25 @@ public class PanelPacienteAgregarTurno extends JPanel {
     private JLabel meslbl;
     private JLabel horalbl;
     public boolean cargando = false;
+
     public PanelPacienteAgregarTurno(PanelManager panelManager) {
         super(new GridLayout(2, 4));
         this.panelManager = panelManager;
-        this.setBackground(panelManager.COLOR_SECUNDARIO);
+        this.setBackground(Colores.COLOR_CUATRO);
     }
 
     public void armarPanelPacienteAgregarTurno (Paciente paciente) {
         odontologolbl = new JLabel("ODONTOLOGO", SwingConstants.CENTER);
+        odontologolbl.setFont(Fuentes.FUENTE_SEIS);
         dialbl = new JLabel("DIA", SwingConstants.CENTER);
+        dialbl.setFont(Fuentes.FUENTE_SEIS);
+
         meslbl = new JLabel("MES", SwingConstants.CENTER);
+        meslbl.setFont(Fuentes.FUENTE_SEIS);
+
         horalbl = new JLabel("HORA", SwingConstants.CENTER);
+        horalbl.setFont(Fuentes.FUENTE_SEIS);
+
 
         add(odontologolbl);
         add(meslbl);
@@ -69,8 +77,7 @@ public class PanelPacienteAgregarTurno extends JPanel {
         horaCombo.setSelectedItem(null);
 
 
-        ArrayList<String> meses = new ArrayList<String>(Arrays.asList("Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
-                ,"Septiembre",  "Octubre","Noviembre","Diciembre"));
+
 
         odontologoCombo.addActionListener(new ActionListener() {
             @Override
@@ -80,7 +87,7 @@ public class PanelPacienteAgregarTurno extends JPanel {
                 horaCombo.removeAllItems();
 
                 for (int i = 1; i <= 12; i++) {
-                    mesCombo.addItem(meses.get(i-1));
+                    mesCombo.addItem(panelManager.meses.get(i-1));
                 }
 
 
@@ -98,8 +105,8 @@ public class PanelPacienteAgregarTurno extends JPanel {
                 if(mesCombo.getSelectedItem() != null && !cargando) {
                     cargando = true;
 
-                    int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-                    for (int i = 1; i <= diasMes[meses.indexOf(mesCombo.getSelectedItem())]; i++) {
+
+                    for (int i = 1; i <= panelManager.diasMes[panelManager.meses.indexOf(mesCombo.getSelectedItem())]; i++) {
                         diaCombo.addItem(Integer.toString(i));
                     }
 
@@ -128,13 +135,15 @@ public class PanelPacienteAgregarTurno extends JPanel {
                         horarios.add(i);
                     }
                     for (Turno turno : turnos) {
-                        if (turno.getMes() == meses.indexOf((String) mesCombo.getSelectedItem())+1) {
-                            if (turno.getDia() == Integer.parseInt((String) diaCombo.getSelectedItem())) {
-                                System.out.println(turno.getHora());
-                                System.out.println(turno.getidPaciente());
-                                horarios.remove(turno.getHora());
+                        if (turno.getidOdontologo() == ( (Odontologo) odontologoCombo.getSelectedItem()).getId()) {
+                            if (turno.getMes() == panelManager.meses.indexOf((String) mesCombo.getSelectedItem()) + 1) {
+                                if (turno.getDia() == Integer.parseInt((String) diaCombo.getSelectedItem())) {
+                                    System.out.println(turno.getHora());
+                                    System.out.println(turno.getidPaciente());
+                                    horarios.remove(turno.getHora());
 
-                                System.out.println(Arrays.toString(horarios.toArray()));
+                                    System.out.println(Arrays.toString(horarios.toArray()));
+                                }
                             }
                         }
                     }
@@ -168,12 +177,13 @@ public class PanelPacienteAgregarTurno extends JPanel {
 
 
 
+
         if (result == JOptionPane.OK_OPTION){
             if (horaCombo.getSelectedItem() != null) {
                 TurnoService turnoService = new TurnoService();
                 Turno turno = new Turno(((Odontologo) odontologoCombo.getSelectedItem()).getId(),
                         paciente.getId(), Long.parseLong((String) horaCombo.getSelectedItem()), Long.parseLong(( String) diaCombo.getSelectedItem()),
-                        (long) meses.indexOf((String) mesCombo.getSelectedItem()) +1);
+                        (long) panelManager.meses.indexOf((String) mesCombo.getSelectedItem()) +1);
                 turnoService.guardar(turno);
             }
 

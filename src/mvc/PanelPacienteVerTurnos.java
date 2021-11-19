@@ -9,6 +9,7 @@ import service.PacienteService;
 import service.TurnoService;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,16 +37,13 @@ public class PanelPacienteVerTurnos extends JPanel {
 
     public void armarPanelPacienteVerTurnos (Paciente paciente) {
         setLayout(new BorderLayout(0, 5));
-        setBackground(panelManager.COLOR_PRINCIPAL);
-
-        ArrayList<String> meses = new ArrayList<String>(Arrays.asList("Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
-                ,"Septiembre",  "Octubre","Noviembre","Diciembre"));
+        setBackground(Colores.COLOR_CUATRO);
         botoneraPrincipal = new JPanel();
         botoneraPrincipal.setLayout(new FlowLayout());
-        botoneraPrincipal.setBackground(panelManager.COLOR_SECUNDARIO);
+        botoneraPrincipal.setBackground(Colores.COLOR_TRES);
 
         turnoslbl = new JLabel("Turnos", SwingConstants.CENTER);
-        turnoslbl.setFont(new Font(null, 0, 30));
+        turnoslbl.setFont(Fuentes.FUENTE_DOS);
         botoneraPrincipal.add(turnoslbl);
 
         //Table
@@ -53,8 +51,16 @@ public class PanelPacienteVerTurnos extends JPanel {
         jtable = new JTable(contenidoTable);
         scrollPane = new JScrollPane();
         scrollPane.setViewportView(jtable);
+        scrollPane.getViewport().setBackground(Colores.COLOR_CUATRO);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         jtable.getTableHeader().setReorderingAllowed(false) ;
         jtable.setDefaultEditor(Object.class, null);
+        jtable.setFont(Fuentes.FUENTE_CUATRO);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( SwingConstants.CENTER);
+        jtable.setDefaultRenderer(Object.class, centerRenderer);
+        jtable.getTableHeader().setFont(Fuentes.FUENTE_CINCO);
+        jtable.setRowHeight(25);
 
         contenidoTable.addColumn("ODONTOLOGO");
         contenidoTable.addColumn("PACIENTE");
@@ -72,7 +78,7 @@ public class PanelPacienteVerTurnos extends JPanel {
 
                 row[0] = odontologo.getNombre() + " " + odontologo.getApellido();
                 row[1] = paciente.getNombre() + " " + paciente.getApellido();
-                row[2] = turno.getHora() + "hs el " + turno.getDia()+" de " + meses.get((int) turno.getMes()-1)  ;
+                row[2] = turno.getHora() + "hs el " + turno.getDia()+" de " + panelManager.meses.get((int) turno.getMes()-1)  ;
                 contenidoTable.addRow(row);
             }
         }
@@ -80,8 +86,9 @@ public class PanelPacienteVerTurnos extends JPanel {
 
 
         btnVolver = new JButton("Volver");
+        btnVolver.setFont(Fuentes.FUENTE_TRES);
         botoneraVolver = new JPanel();
-        botoneraVolver.setBackground(panelManager.COLOR_SECUNDARIO);
+        botoneraVolver.setBackground(Colores.COLOR_SEIS);
         botoneraVolver.add(btnVolver);
         add(botoneraVolver, BorderLayout.SOUTH);
         add(botoneraPrincipal, BorderLayout.NORTH);

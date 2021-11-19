@@ -6,19 +6,25 @@ public class Paciente extends Persona implements Serializable {
     private long id;
     private String domicilio;
     private int dni;
-    private Date fechaAlta;
+    private int mesAlta;
+    private int diaAlta;
 
-    public Paciente(long id, String nombre, String apellido, String domicilio, int dni) {
+    public Paciente(long id, String nombre, String apellido, String domicilio, int dni, int mesAlta, int diaAlta) {
         super(nombre, apellido);
         this.id = id;
         this.domicilio = domicilio;
         this.dni = dni;
+        this.mesAlta=mesAlta;
+        this.diaAlta = diaAlta;
     }
 
-    public Paciente(String nombre, String apellido, String domicilio, int dni){
+
+    public Paciente(String nombre, String apellido, String domicilio, int dni, int mesAlta, int diaAlta){
         super(nombre,apellido);
         this.domicilio = domicilio;
         this.dni = dni;
+        this.mesAlta=mesAlta;
+        this.diaAlta = diaAlta;
     }
 
     public String getDomicilio() {
@@ -37,20 +43,20 @@ public class Paciente extends Persona implements Serializable {
         this.dni = dni;
     }
 
-    public Date getFechaAlta() {
-        return this.fechaAlta;
+    public int getMesAlta() {
+        return mesAlta;
     }
 
-    public void setFechaAlta(int año, int mes, int dia) {
-        fechaAlta = new Date();
-        fechaAlta.setYear(año);
-        fechaAlta.setMonth(mes);
-        fechaAlta.setDate(dia);
+    public void setMesAlta(int mesAlta) {
+        this.mesAlta = mesAlta;
     }
 
-    @Override
-    public String toString() {
-        return "Paciente{ id:"+ id + "nombre='" + super.getNombre() + '\'' + ", apellido='" + super.getApellido() + '\'' + ", domicilio='" + domicilio + '\'' + ", dni=" + dni + ", fechaAlta=" + fechaAlta + '}';
+    public int getDiaAlta() {
+        return diaAlta;
+    }
+
+    public void setDiaAlta(int diaAlta) {
+        this.diaAlta = diaAlta;
     }
 
     public long getId() {
@@ -59,5 +65,10 @@ public class Paciente extends Persona implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return this.getNombre()+ " " + this.getApellido();
     }
 }

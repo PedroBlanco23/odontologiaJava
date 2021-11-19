@@ -1,6 +1,7 @@
 package mvc;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,18 +24,26 @@ public class PanelLogin extends JPanel {
 
     public void armarPanelLogin() {
         setLayout(new BorderLayout());
-        setBackground(panelManager.COLOR_PRINCIPAL);
+        setBackground(Colores.COLOR_TRES);
         userLbl = new JLabel("Usuario: ");
+        userLbl.setFont(Fuentes.FUENTE_UNO);
+        userLbl.setForeground(Color.white);
         userTxt = new JTextField();
+        userTxt.setFont(Fuentes.FUENTE_UNO);
         passwordLbl = new JLabel("Contraseña: ");
+        passwordLbl.setForeground(Color.white);
+        passwordLbl.setFont(Fuentes.FUENTE_UNO);
         passwordTxt = new JPasswordField();
+        passwordTxt.setFont(Fuentes.FUENTE_UNO);
 
         panelUsuario = new JPanel(new GridLayout());
-        panelUsuario.setBackground(panelManager.COLOR_PRINCIPAL);
+        panelUsuario.setBackground(Colores.COLOR_TRES);
+        panelUsuario.setBorder(new EmptyBorder(0,0,10,0));
         panelContrasena = new JPanel(new GridLayout());
-        panelContrasena.setBackground(panelManager.COLOR_PRINCIPAL);
+        panelContrasena.setBackground(Colores.COLOR_TRES);
         panelCampos = new JPanel(new BorderLayout());
-        panelCampos.setBackground(panelManager.COLOR_PRINCIPAL);
+        panelCampos.setBorder(new EmptyBorder(10,10,10,10));
+        panelCampos.setBackground(Colores.COLOR_TRES);
 
         panelUsuario.add(userLbl);
         panelUsuario.add(userTxt);
@@ -52,8 +61,9 @@ public class PanelLogin extends JPanel {
 
 
         botonera = new JPanel();
-        botonera.setBackground(panelManager.COLOR_PRINCIPAL);
+        botonera.setBackground(Colores.COLOR_TRES);
         btnIniciarSesion = new JButton("Iniciar sesión");
+        btnIniciarSesion.setFont(Fuentes.FUENTE_UNO);
         botonera.add(btnIniciarSesion);
 
         btnIniciarSesion.addActionListener(new ActionListener() {
@@ -65,7 +75,7 @@ public class PanelLogin extends JPanel {
 
 
         add(panelCampos, BorderLayout.NORTH);
-        add(botonera, BorderLayout.AFTER_LINE_ENDS);
+        add(botonera, BorderLayout.SOUTH);
 
 
 

@@ -11,9 +11,6 @@ import javax.swing.*;
 
 public class PanelManager {
 
-    public static final Color COLOR_PRINCIPAL = new Color(221, 213, 208);
-    public static final Color COLOR_SECUNDARIO = new Color(207, 192, 189);
-    public static final Color COLOR_TERCIARIO = new Color(184, 184, 170);
 
     private JFrame jframe;
     private PanelAdministrador panelAdministrador;
@@ -22,12 +19,19 @@ public class PanelManager {
     private PanelPacienteVerTurnos panelPacienteVerTurnos;
     private PanelPacienteAgregarTurno panelPacienteAgregarTurno;
 
+    public final ArrayList<String> meses = new ArrayList<String>(Arrays.asList("Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
+            ,"Septiembre",  "Octubre","Noviembre","Diciembre"));
+
+    public final int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
 
     public void armarManager() {
         jframe = new JFrame();
         UIManager UI=new UIManager();
-        UI.put("OptionPane.background", this.COLOR_TERCIARIO);
-        UI.put("Panel.background", this.COLOR_SECUNDARIO);
+        UI.put("OptionPane.background", Colores.COLOR_CINCO);
+        UI.put("Panel.background", Colores.COLOR_CINCO);
+        UI.put("OptionPane.messageFont", Fuentes.FUENTE_TRES);
+        UI.put("OptionPane.buttonFont", Fuentes.FUENTE_TRES);
 
 
         panelPaciente = new PanelPaciente(this);
@@ -42,39 +46,95 @@ public class PanelManager {
     public void mostrarLogin() {
         panelLogin = new PanelLogin(this);
         panelLogin.armarPanelLogin();
-        jframe.setBounds(250, 250, 400, 120);
+        jframe.setBounds(250, 250, 400, 195);
         mostrarEnPantalla(panelLogin);
     }
 
     public void mostrarAdministrador() {
         panelAdministrador = new PanelAdministrador(this);
         panelAdministrador.armarPanelAdmin();
-        jframe.setBounds(250, 250, 700, 160);
+        jframe.setBounds(250, 250, 700, 240);
         mostrarEnPantalla(panelAdministrador);
     }
 
     public void mostrarAdministradorPacientes() {
         PanelAdministradorPaciente panelAdministradorPaciente = new PanelAdministradorPaciente(this);
         panelAdministradorPaciente.armarPanelAdminPaciente();
-        jframe.setBounds(250, 250, 700, 500);
+        jframe.setBounds(250, 250, 1200, 500);
         mostrarEnPantalla(panelAdministradorPaciente);
     }
 
-    public void mostrarAgregar() {
-        PanelAdministradorPacienteAgregar panelAdministradorPacienteAgregar = new PanelAdministradorPacienteAgregar(this);
-        panelAdministradorPacienteAgregar.armarPanelAdministradorPacienteAgregar();
+    public void mostrarAdministradorOdontologos(){
+        PanelAdministradorOdontologo panelAdministradorOdontologo = new PanelAdministradorOdontologo(this);
+        panelAdministradorOdontologo.armarPanelAdminOdontologo();
+        jframe.setBounds(250, 250, 700, 500);
+        mostrarEnPantalla(panelAdministradorOdontologo);
     }
 
-    public void mostrarEditar(JTable tabla) {
-        PanelAdministradorPacienteEditar panelAdministradorPacienteEditar = new PanelAdministradorPacienteEditar(this);
-        panelAdministradorPacienteEditar.armarPanelAdministradorPacienteEditar(tabla);
+    public void mostrarAdministradorTurnos(){
+        PanelAdministradorTurno panelAdministradorTurno = new PanelAdministradorTurno(this);
+        panelAdministradorTurno.armarPanelAdminTurno();
+        jframe.setBounds(250, 250, 760, 500);
+        mostrarEnPantalla(panelAdministradorTurno);
     }
 
-    public void mostrarBorrar(JTable tabla) {
-        PanelAdministradorPacienteBorrar panelAdministradorPacienteBorrar = new PanelAdministradorPacienteBorrar(this);
-        panelAdministradorPacienteBorrar.armarPanelAdministracionPacienteBorrar(tabla);
+    public void mostrarAgregar(int x) {  //recibe x si, que le dice de que boton es
+        switch (x) {
+            case 1: 
+                PanelAdministradorPacienteAgregar panelAdministradorPacienteAgregar = new PanelAdministradorPacienteAgregar(this);
+                panelAdministradorPacienteAgregar.armarPanelAdministradorPacienteAgregar();
+                break;
+            case 2:
+                PanelAdministradorOdontologoAgregar panelAdministradorOdontologoAgregar = new PanelAdministradorOdontologoAgregar(this);
+                panelAdministradorOdontologoAgregar.armarPanelAdministradorOdontologoAgregar();
+                break;
+            case 3:
+                PanelAdministradorTurnoAgregar panelAdministradorTurnoAgregar = new PanelAdministradorTurnoAgregar(this);
+                panelAdministradorTurnoAgregar.armarPanelAdministradorTurnoAgregar();
+                break;
+            default: break;
+        }
     }
 
+    public void mostrarEditar(int x, JTable tabla) { //recibe x si, que le dice de que boton es
+        switch (x) {
+            case 1:
+                PanelAdministradorPacienteEditar panelAdministradorPacienteEditar = new PanelAdministradorPacienteEditar(this);
+                panelAdministradorPacienteEditar.armarPanelAdministradorPacienteEditar(tabla);
+                break;
+            case 2:
+                PanelAdministradorOdontologoEditar panelAdministradorOdontologoEditar = new PanelAdministradorOdontologoEditar(this);
+                panelAdministradorOdontologoEditar.armarPanelAdministradorOdontologoEditar(tabla);
+                break;
+            case 3:
+                PanelAdministradorTurnoEditar panelAdministradorTurnoEditar = new PanelAdministradorTurnoEditar(this);
+                panelAdministradorTurnoEditar.armarPanelAdministradorTurnoEditar(tabla);
+                break;
+            default: break;
+        }
+    }
+
+    public void mostrarBorrar(int x, JTable tabla) { //recibe x si, que le dice de que boton es
+        switch (x) {
+            case 1:
+                PanelAdministradorPacienteBorrar panelAdministradorPacienteBorrar = new PanelAdministradorPacienteBorrar(this);
+                panelAdministradorPacienteBorrar.armarPanelAdministradorPacienteBorrar(tabla);
+                break;
+            case 2:
+                PanelAdministradorOdontologoBorrar panelAdministradorOdontologoBorrar = new PanelAdministradorOdontologoBorrar(this);
+                panelAdministradorOdontologoBorrar.armarPanelAdministradorOdontologoBorrar(tabla);
+                break;
+            case 3:
+                PanelAdministradorTurnoBorrar panelAdministradorTurnoBorrar = new PanelAdministradorTurnoBorrar(this);
+                panelAdministradorTurnoBorrar.armarPanelAdministradorTurnoBorrar(tabla);
+                break;
+            default: break;
+        }
+    }
+    
+
+    
+    
     public void mostrarPaciente(Paciente paciente) {
         if (paciente == null) {
             this.mostrarPopUp("El usuario no tiene un paciente asociado.");
@@ -82,7 +142,7 @@ public class PanelManager {
         } else {
             panelPaciente = new PanelPaciente(this);
             panelPaciente.armarPanelPaciente(paciente);
-            jframe.setBounds(250, 250, 700, 160);
+            jframe.setBounds(250, 250, 700, 220);
             mostrarEnPantalla(panelPaciente);
         }
     }

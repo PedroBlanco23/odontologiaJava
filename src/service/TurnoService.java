@@ -21,7 +21,7 @@ public class TurnoService {
         return turnoDAO.buscarPorId(id);
     }
 
-    public void eliminarOdotologo(long id){
+    public void eliminarTurno(long id){
         turnoDAO.borrar(id);
     }
 

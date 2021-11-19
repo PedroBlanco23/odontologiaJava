@@ -6,6 +6,12 @@ public class Odontologo extends Persona implements Serializable {
     private long id;
     private int matricula;
 
+    public Odontologo(long id, String nombre, String apellido, int matricula) {
+        super(nombre, apellido);
+        this.id = id;
+        this.matricula = matricula;
+    }
+
     public Odontologo(String nombre, String apellido, int matricula){
         super(nombre,apellido);
         this.matricula = matricula;

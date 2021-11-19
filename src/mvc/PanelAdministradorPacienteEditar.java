@@ -6,13 +6,16 @@ import service.UsuarioService;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PanelAdministradorPacienteEditar extends JPanel{
     private PanelManager panelManager;
 
     public PanelAdministradorPacienteEditar (PanelManager panelManager) {
-        super(new GridLayout(2, 7));
+        super(new GridLayout(2, 8));
         this.panelManager = panelManager;
+        this.setBackground(Colores.COLOR_CUATRO);
     }
 
     public void armarPanelAdministradorPacienteEditar(JTable tabla) {
@@ -23,11 +26,16 @@ public class PanelAdministradorPacienteEditar extends JPanel{
                 "Apellido",
                 "Domicilio",
                 "DNI",
-                "Fecha de alta",
+                "Mes de alta",
+                "Dia de alta",
                 "Usuario",
                 "Contraseña"};
 
-        for (String f : labels) add(new JLabel(f));
+        for (String f : labels) {
+            JLabel c = new JLabel(f);
+            c.setFont(Fuentes.FUENTE_SEIS);
+            add(c);
+        };
 
         int seleccion = tabla.getSelectedRow();
 
@@ -47,22 +55,71 @@ public class PanelAdministradorPacienteEditar extends JPanel{
         JTextField dniField = new JTextField();
         dniField.setText(tabla.getValueAt(seleccion,4).toString());
         add(dniField);
-        JTextField fechaDeAltaField = new JTextField();
-        //fechaDeAltaField.setText(tabla.getValueAt(seleccion,5).toString());
-        add(fechaDeAltaField);
+        JComboBox<String> mesDeAltaCombo = new JComboBox<String>();
+        JComboBox<String> diaDeAltaCombo = new JComboBox<String>();
+
+
+        //Llenando con meses
+        for (int i = 1; i <= 12; i++) {
+            mesDeAltaCombo.addItem(panelManager.meses.get(i-1));
+        }
+
+        //Llenando con dias
+        int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        for (int i = 1; i <= diasMes[panelManager.meses.indexOf(mesDeAltaCombo.getSelectedItem())]; i++) {
+            diaDeAltaCombo.addItem(Integer.toString(i));
+        }
+
+
+
+
+        diaDeAltaCombo.setSelectedIndex((int)(tabla.getValueAt(seleccion, 6))-1);
+        mesDeAltaCombo.setSelectedIndex(panelManager.meses.indexOf((String)tabla.getValueAt(seleccion,5)));
+
+
+
+
+        mesDeAltaCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                diaDeAltaCombo.removeAllItems();
+
+                if(mesDeAltaCombo.getSelectedItem() != null ) {
+                    for (int i = 1; i <= panelManager.diasMes[panelManager.meses.indexOf(mesDeAltaCombo.getSelectedItem())]; i++) {
+                        diaDeAltaCombo.addItem(Integer.toString(i));
+                    }
+
+                    diaDeAltaCombo.setSelectedItem(null);
+                }
+            }
+        });
+
+
+
+
+        add(mesDeAltaCombo);
+        add(diaDeAltaCombo);
+
+
         JTextField usuarioField = new JTextField();
-        usuarioField.setText(tabla.getValueAt(seleccion,6).toString());
+        usuarioField.setText(tabla.getValueAt(seleccion,7).toString());
         add(usuarioField);
         JTextField contrasenaField = new JTextField();
-        contrasenaField.setText(tabla.getValueAt(seleccion,7).toString());
+        contrasenaField.setText(tabla.getValueAt(seleccion,8).toString());
         add(contrasenaField);
 
-        int result = JOptionPane.showConfirmDialog(null, this, "Editar",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        //pop up en ingles
+//        int result = JOptionPane.showConfirmDialog(null, this, "Editar",
+//                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        //pop up en espanol
+        int result = JOptionPane.showOptionDialog(null, this, "Editar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,  new String[]{"Editar", "Cancelar"},
+                "default");
         if (result == JOptionPane.OK_OPTION){
             //creacion de paciente a raiz de datos proporcionados *falta fecha*
             System.out.println(nombreField.getText()+apellidoField.getText()+domicilioField.getText()+Integer.parseInt(dniField.getText()));
-            Paciente nuevoPaciente = new Paciente(Long.parseLong(idField.getText()) ,nombreField.getText(),apellidoField.getText(),domicilioField.getText(),Integer.parseInt(dniField.getText()));
+            Paciente nuevoPaciente = new Paciente(Long.parseLong(idField.getText()) ,nombreField.getText(),apellidoField.getText(),domicilioField.getText(),Integer.parseInt(dniField.getText()), (int)
+             panelManager.meses.indexOf(mesDeAltaCombo.getSelectedItem())+1, Integer.parseInt((String) diaDeAltaCombo.getSelectedItem()));
             //creacion de usuario a raiz de datos y del nuevo paciente
             PacienteService pacienteService = new PacienteService();//nuevo service paciente
             pacienteService.guardarPaciente(nuevoPaciente);
