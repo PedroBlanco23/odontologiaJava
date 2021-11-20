@@ -65,8 +65,7 @@ public class PanelAdministradorPacienteEditar extends JPanel{
         }
 
         //Llenando con dias
-        int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        for (int i = 1; i <= diasMes[panelManager.meses.indexOf(mesDeAltaCombo.getSelectedItem())]; i++) {
+        for (int i = 1; i <= panelManager.diasMes[panelManager.meses.indexOf(mesDeAltaCombo.getSelectedItem())]; i++) {
             diaDeAltaCombo.addItem(Integer.toString(i));
         }
 
@@ -117,7 +116,6 @@ public class PanelAdministradorPacienteEditar extends JPanel{
                 "default");
         if (result == JOptionPane.OK_OPTION){
             //creacion de paciente a raiz de datos proporcionados *falta fecha*
-            System.out.println(nombreField.getText()+apellidoField.getText()+domicilioField.getText()+Integer.parseInt(dniField.getText()));
             Paciente nuevoPaciente = new Paciente(Long.parseLong(idField.getText()) ,nombreField.getText(),apellidoField.getText(),domicilioField.getText(),Integer.parseInt(dniField.getText()), (int)
              panelManager.meses.indexOf(mesDeAltaCombo.getSelectedItem())+1, Integer.parseInt((String) diaDeAltaCombo.getSelectedItem()));
             //creacion de usuario a raiz de datos y del nuevo paciente

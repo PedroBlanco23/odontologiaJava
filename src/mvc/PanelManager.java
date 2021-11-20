@@ -74,7 +74,7 @@ public class PanelManager {
     public void mostrarAdministradorTurnos(){
         PanelAdministradorTurno panelAdministradorTurno = new PanelAdministradorTurno(this);
         panelAdministradorTurno.armarPanelAdminTurno();
-        jframe.setBounds(250, 250, 760, 500);
+        jframe.setBounds(250, 250, 850, 500);
         mostrarEnPantalla(panelAdministradorTurno);
     }
 

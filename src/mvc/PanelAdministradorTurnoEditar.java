@@ -98,7 +98,6 @@ public class PanelAdministradorTurnoEditar extends JPanel {
         TurnoService turnoService = new TurnoService();
         Turno turnoActual = turnoService.recuperarTurno(idTurno);
 
-        System.out.println(turnoActual);
 
         int indexOdo=-1;
         for(Odontologo odo : odontologos) {
@@ -119,7 +118,6 @@ public class PanelAdministradorTurnoEditar extends JPanel {
         mesCombo.setSelectedIndex((int) turnoActual.getMes()-1);
         horaCombo.setSelectedIndex((int) turnoActual.getHora()-8);
 
-        odontologoCombo.setSelectedItem(odontologoService.recuperarOdontologo(turnoActual.getidPaciente()));
 
 
         //Que se muestren los demas combos de dia, mes y hora cuando se seleccione el doctor
@@ -205,14 +203,16 @@ public class PanelAdministradorTurnoEditar extends JPanel {
         add(diaCombo);
         add(horaCombo);
 
-        int result = JOptionPane.showOptionDialog(null, this, "Agregar",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,  new String[]{"Añadir turno", "Cancelar"},
+        int result = JOptionPane.showOptionDialog(null, this, "Editar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,  new String[]{"Editar", "Cancelar"},
                 "default");
         if (result == JOptionPane.OK_OPTION){
             //creacion de turno a raiz de datos proporcionados
 
             Turno nuevoTurno = new Turno(idTurno, ((Odontologo) odontologoCombo.getSelectedItem()).getId(),
-                    ((Paciente) pacienteCombo.getSelectedItem()).getId(), Long.parseLong((String) horaCombo.getSelectedItem()), Long.parseLong(( String) diaCombo.getSelectedItem()),
+                    ((Paciente) pacienteCombo.getSelectedItem()).getId(),
+                    Long.parseLong((String) horaCombo.getSelectedItem()),
+                    Long.parseLong(( String) diaCombo.getSelectedItem()),
                     (long) panelManager.meses.indexOf((String) mesCombo.getSelectedItem()) +1);
 
             //guardado

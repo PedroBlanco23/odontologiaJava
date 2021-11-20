@@ -133,11 +133,7 @@ public class PanelAdministradorTurnoAgregar extends JPanel{
                         if (turno.getidOdontologo() == ((Odontologo) odontologoCombo.getSelectedItem()).getId()) {
                             if (turno.getMes() == panelManager.meses.indexOf((String) mesCombo.getSelectedItem()) + 1) {
                                 if (turno.getDia() == Integer.parseInt((String) diaCombo.getSelectedItem())) {
-                                    System.out.println(turno.getHora());
-                                    System.out.println(turno.getidPaciente());
                                     horarios.remove(turno.getHora());
-
-                                    System.out.println(Arrays.toString(horarios.toArray()));
                                 }
                             }
                         }

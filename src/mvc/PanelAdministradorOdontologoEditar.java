@@ -50,8 +50,9 @@ public class PanelAdministradorOdontologoEditar extends JPanel {
         add(matriculaField);
 
 
-        int result = JOptionPane.showConfirmDialog(null, this, "Editar",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showOptionDialog(null, this, "Editar",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,  new String[]{"Editar", "Cancelar"},
+                "default");
         if (result == JOptionPane.OK_OPTION){
             //creacion de Odontologo a raiz de datos
 

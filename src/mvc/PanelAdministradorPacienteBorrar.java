@@ -21,7 +21,7 @@ public class PanelAdministradorPacienteBorrar extends JPanel {
         long id = (long) tabla.getValueAt(seleccion, 0);
 
         //mensaje en espanol
-        int resultado = JOptionPane.showOptionDialog(null, "¿Está seguro de eliminar este paciente?" , "Confirmación",
+        int resultado = JOptionPane.showOptionDialog(null, "¿Está seguro de eliminar este Paciente?" , "Confirmación",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,  new String[]{"Eliminar", "Cancelar"},
                 "default");
         //mensaje en ingles

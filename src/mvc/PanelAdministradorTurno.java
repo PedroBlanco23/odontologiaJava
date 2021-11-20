@@ -132,7 +132,6 @@ public class PanelAdministradorTurno extends JPanel {
             Object[] data = new Object[6];
             if (turno!= null){
                 long idPaciente = turno.getidPaciente();
-                System.out.println(idPaciente);
                 long idOdontologo = turno.getidOdontologo();
 
                 data[0]= turno.getId();

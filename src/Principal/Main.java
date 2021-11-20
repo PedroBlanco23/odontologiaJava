@@ -20,9 +20,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-
+        System.out.println("Entrar como admin: Usuario:Admin Contraseña:123");
         PanelManager panelManager = new PanelManager();
-       panelManager.armarManager();
+        panelManager.armarManager();
 
 /*
 
@@ -41,13 +41,12 @@ public class Main {
 
       pacienteService.guardarPaciente(paciente);
 */
-// UsuarioService usuarioService = new UsuarioService();
-//        Usuario usuario = new Usuario("Admin", "123");
-//      usuario.setRol("Admin");
-//
-//
-//
-//       usuarioService.guardarUsuario(usuario);
+    //UsuarioService usuarioService = new UsuarioService();
+
+
+    /*Usuario usuario = new Usuario("Admin", "123");
+    usuario.setRol("Admin");
+    usuarioService.guardarUsuario(usuario);*/
 /*
         List<Usuario> usuarios = usuarioService.listarUsuario();
         for (Usuario user: usuarios){
@@ -82,13 +81,13 @@ public class Main {
 
 */
 
-        TurnoService turnoService= new TurnoService();
+        /*TurnoService turnoService= new TurnoService();
         List<Turno>turnos= turnoService.listarTurno();
 
         for(Turno t : turnos)
             System.out.println(t);
 
-
+*/
     }
 
 }
